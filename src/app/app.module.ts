@@ -13,6 +13,7 @@ import { AdmComponent } from './adm/adm.component';
 import { ProductsComponent } from './products/products.component';
 import { VhomeComponent } from './vhome/vhome.component';
 import { MyInsetComponent } from './my-inset/my-inset.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -26,11 +27,12 @@ import { MyInsetComponent } from './my-inset/my-inset.component';
     MyInsetComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ChartsModule
+    ChartsModule,
+    RouterModule
   ],
   providers: [MenuComponent],
   bootstrap: [AppComponent]

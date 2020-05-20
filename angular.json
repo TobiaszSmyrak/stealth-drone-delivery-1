@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
-            "outputPath": "dist/stealth",
+            "outputPath": "dist/webstart2019/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -114,6 +114,41 @@
               "**/node_modules/**"
             ]
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/webstart2019/server",
+            "main": "src/main.server.ts",
+            "tsConfig": "src/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true
+            }
+          }
+        },
+        "app-shell": {
+          "builder": "@angular-devkit/build-angular:app-shell",
+          "options": {
+            "browserTarget": "webstart2019:build",
+            "serverTarget": "webstart2019:server",
+            "route": "shell"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "webstart2019:build:production",
+              "serverTarget": "webstart2019:server:production"
+            }
+          }
         }
       }
     },
@@ -141,6 +176,123 @@
             "exclude": [
               "**/node_modules/**"
             ]
+          }
+        }
+      }
+    },
+    "games": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/games",
+      "sourceRoot": "projects/games/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/games",
+            "index": "projects/games/src/index.html",
+            "main": "projects/games/src/main.ts",
+            "polyfills": "projects/games/src/polyfills.ts",
+            "tsConfig": "projects/games/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/games/src/favicon.ico",
+              "projects/games/src/assets"
+            ],
+            "styles": [
+              "projects/games/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/games/src/environments/environment.ts",
+                  "with": "projects/games/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "games:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "games:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "games:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/games/src/test.ts",
+            "polyfills": "projects/games/src/polyfills.ts",
+            "tsConfig": "projects/games/tsconfig.spec.json",
+            "karmaConfig": "projects/games/karma.conf.js",
+            "assets": [
+              "projects/games/src/favicon.ico",
+              "projects/games/src/assets"
+            ],
+            "styles": [
+              "projects/games/src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/games/tsconfig.app.json",
+              "projects/games/tsconfig.spec.json",
+              "projects/games/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/games/e2e/protractor.conf.js",
+            "devServerTarget": "games:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "games:serve:production"
+            }
           }
         }
       }
